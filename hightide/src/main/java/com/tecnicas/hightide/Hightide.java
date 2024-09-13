@@ -31,8 +31,8 @@ public class Hightide {
         List rivasPop = new ArrayList();
         rivasPop.add(m3);
 
-        Playlist raps = new Playlist(null, "Raps do Rivas", rivasRaps);
-        Playlist pops = new Playlist(null, "Pop kkk", rivasPop);
+        Playlist raps = new Playlist(null, "Raps do Rivas", rivasRaps, u1);
+        Playlist pops = new Playlist(null, "Pop kkk", rivasPop, u1);
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence.xml");
         EntityManager em = emf.createEntityManager();
