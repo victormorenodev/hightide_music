@@ -1,2 +1,5 @@
-com\tecnicas\hightide\Hightide.class
 com\tecnicas\hightide\model\User.class
+com\tecnicas\hightide\model\Playlist.class
+com\tecnicas\hightide\Hightide.class
+com\tecnicas\hightide\model\Musica$Genero.class
+com\tecnicas\hightide\model\Musica.class
