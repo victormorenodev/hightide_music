@@ -28,18 +28,13 @@ public class Playlist implements Serializable{
                     {@JoinColumn(name="musicas_id")})
     private List<Musica> musicas;
     
-    @ManyToOne
-    @JoinColumn(name="usuario_id")
-    private User usuario;
-    
     public Playlist () {
         
     }
 
-    public Playlist(Integer id, String titulo, List<Musica> musicas, User usuario) {
+    public Playlist(Integer id, String titulo, List<Musica> musicas) {
         this.id = id;
         this.titulo = titulo;
-        this.usuario = usuario;
         this.musicas = musicas;
     }
 
@@ -67,18 +62,9 @@ public class Playlist implements Serializable{
         this.musicas = musicas;
     }
 
-    public User getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(User usuario) {
-        this.usuario = usuario;
-    }
-
     @Override
     public String toString() {
-        return "Playlist{" + "id=" + id + ", titulo=" + titulo + ", usuario=" + usuario + ", musicas=" + musicas + '}';
+        return "Playlist{" + "id=" + id + ", titulo=" + titulo + ", musicas=" + musicas + '}';
     }
-    
    
 }

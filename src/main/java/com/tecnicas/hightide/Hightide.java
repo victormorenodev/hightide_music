@@ -7,7 +7,6 @@ package com.tecnicas.hightide;
 import com.tecnicas.hightide.model.models.Musica;
 import static com.tecnicas.hightide.model.models.Musica.Genero.*;
 import com.tecnicas.hightide.model.models.Playlist;
-import com.tecnicas.hightide.model.models.User;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -19,7 +18,6 @@ import javax.persistence.*;
 public class Hightide {
 
     public static void main(String[] args) {
-        User u1 = new User(null, "Teste", "u1", "123");
         Musica m1 = new Musica(null, "Capa", "Música Rap1", "Rivânio", "url", RAP);
         Musica m2 = new Musica(null, "Capa", "Música Rap2", "Rivânio", "url", RAP);
         Musica m3 = new Musica(null, "Capa", "Música Pop1", "Rivânio", "url", POP);
@@ -31,13 +29,12 @@ public class Hightide {
         List rivasPop = new ArrayList();
         rivasPop.add(m3);
 
-        Playlist raps = new Playlist(null, "Raps do Rivas", rivasRaps, u1);
-        Playlist pops = new Playlist(null, "Pop kkk", rivasPop, u1);
+        Playlist raps = new Playlist(null, "Raps do Rivas", rivasRaps);
+        Playlist pops = new Playlist(null, "Pop kkk", rivasPop);
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence.xml");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.persist(u1);
         em.persist(m1);
         em.persist(m2);
         em.persist(m3);

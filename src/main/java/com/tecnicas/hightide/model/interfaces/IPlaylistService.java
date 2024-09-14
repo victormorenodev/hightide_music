@@ -13,11 +13,11 @@ import java.util.List;
  * @author Victor Moreno
  */
 public interface IPlaylistService {
-    public Playlist createPlaylist(String titulo, List<Musica> musicas, String userId);
-    public void addMusica(String playlistId, String musicaId);
-    public void removeMusica(String playlistId, String musicaId);
-    public void deletaPlaylist(String playlistId);
+    public Playlist createPlaylist(String titulo, List<Musica> musicas);
+    public void addMusica(String playlistTitulo, String musicaTitulo);
+    public void removeMusica(String playlistId, String musicaTitulo);
+    public void deletaPlaylist(String playlistTitulo);
     public List<Musica> listaMusicasPlaylist(String playlistId);
-    public List<Playlist> listaPlaylists(String usuarioId);
+    public List<Playlist> listaPlaylists();
     public Playlist acessaPlaylist(String playlistId);
 }
