@@ -17,12 +17,12 @@ import java.io.File;
  * @author rivan
  */
 public class MusicController implements IMusicaController{
-    MusicaService musicaservice = new MusicaService();
+    MusicaService musicaService = new MusicaService();
     @Override
     public List<Musica> listAllMusics() {
         //listaTodasMusicas(); 
         //retorna list 
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return musicaService.listaTodasMusicas();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class MusicController implements IMusicaController{
         }
         //retorna list
         return allmusic;
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
@@ -63,9 +63,9 @@ public class MusicController implements IMusicaController{
         
         
         //createMusica(title, artist, urlcapa, musicUrl, gender)
-        return musicaservice.createMusica(title, artist, urlcapa, musicUrl, gender);
+        return musicaService.createMusica(title, artist, urlcapa, musicUrl, gender);
         
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
@@ -76,10 +76,10 @@ public class MusicController implements IMusicaController{
         //verifica se a musica existe musicaByTitulo( musicTitle);
         
         //passa o id da musica pra deletar / deleteMusica(musica.getid());
-        return musicaservice.deleteMusica(musicaservice.musicaByTitulo(musicTitle).getId());
+        return musicaService.deleteMusica(musicaService.musicaByTitulo(musicTitle).getId());
         //retorna TRUE se a musica foi deletada
         
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       
     }
 
     @Override
@@ -89,16 +89,14 @@ public class MusicController implements IMusicaController{
             return null;
         }
         
-        return musicaservice.musicaByTitulo(musicTitle);
+        return musicaService.musicaByTitulo(musicTitle);
         
         //musicaByTitulo(musicTitle);
         //retorna musica se != null
-        
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     public Boolean musicExists(String musicTitle){
-        return musicaservice.musicaByTitulo(musicTitle) != null;
+        return musicaService.musicaByTitulo(musicTitle) != null;
     }
     
     public Boolean isMusicValid(String musicUrl){
