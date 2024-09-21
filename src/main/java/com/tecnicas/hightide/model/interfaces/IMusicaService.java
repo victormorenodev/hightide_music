@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IMusicaService {
     public Musica createMusica(String titulo, String artista, String capa, String url, Genero genero);
-    public Boolean deleteMusica(String id);
-    public List<Musica> listaTodasMusicas(String usuarioId);
+    public Boolean deleteMusica(Integer id);
+    public List<Musica> listaTodasMusicas();
     public Musica musicaByTitulo(String titulo);
 }

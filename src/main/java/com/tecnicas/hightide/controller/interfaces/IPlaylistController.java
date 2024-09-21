@@ -1,4 +1,7 @@
+package com.tecnicas.hightide.controller.interfaces;
 
+
+import com.tecnicas.hightide.model.models.Musica;
 import com.tecnicas.hightide.model.models.Playlist;
 import java.util.List;
 
@@ -16,6 +19,7 @@ public interface IPlaylistController {
     public Playlist playPlaylist(String playlistTitle);
     public Playlist addMusicToPlaylist(String playlistTitle, String musicTitle);
     public Playlist removeMusicFromPlaylist(String playlistTitle, String musicTitle);
+    public List<Musica> listaMusicasPlaylist(String playlistId);
     public Playlist createPlaylist(String playlistTitle);
     public Boolean deletePlaylist(String playlistTitle);
 }
