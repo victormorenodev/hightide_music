@@ -17,7 +17,6 @@ public interface IPlaylistService {
     public void addMusica(String playlistTitulo, String musicaTitulo);
     public void removeMusica(String playlistId, String musicaTitulo);
     public void deletaPlaylist(String playlistTitulo);
-    public List<Musica> listaMusicasPlaylist(String playlistId);
     public List<Playlist> listaPlaylists();
-    public Playlist acessaPlaylist(String playlistId);
+    public Playlist acessaPlaylist(String playlistTitle);
 }
