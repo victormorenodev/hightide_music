@@ -15,8 +15,8 @@ import java.util.List;
 public interface IPlaylistService {
     public Playlist createPlaylist(String titulo, List<Musica> musicas);
     public void addMusica(String playlistTitulo, String musicaTitulo);
-    public void removeMusica(String playlistId, String musicaTitulo);
-    public void deletaPlaylist(String playlistTitulo);
+    public void removeMusica(String playlistTitulo, String musicaTitulo);
+    public Boolean deletaPlaylist(String playlistId);
     public List<Playlist> listaPlaylists();
     public Playlist acessaPlaylist(String playlistTitle);
 }
