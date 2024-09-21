@@ -1,4 +1,5 @@
 
+import com.tecnicas.hightide.model.models.Musica;
 import com.tecnicas.hightide.model.models.Playlist;
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface IPlaylistController {
     public Playlist removeMusicFromPlaylist(String playlistTitle, String musicTitle);
     public Playlist createPlaylist(String playlistTitle);
     public Boolean deletePlaylist(String playlistTitle);
+    public List<Musica> listaMusicasPlaylist(String playlistId);
 }
