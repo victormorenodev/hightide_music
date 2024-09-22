@@ -11,14 +11,17 @@ import com.tecnicas.hightide.model.models.Playlist;
 import com.tecnicas.hightide.model.services.PlaylistService;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
  * @author rivan
  */
 public class PlaylistController implements IPlaylistController{
-    PlaylistService playlistService = new PlaylistService();
-    ControllerUtils controllerUtils = new ControllerUtils();
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence.xml");
+    PlaylistService playlistService = new PlaylistService(emf);
+    ControllerUtils controllerUtils = new ControllerUtils(emf);
     
     @Override
     public List<Playlist> listAllPlaylists() {
@@ -35,7 +38,7 @@ public class PlaylistController implements IPlaylistController{
     
     @Override
     public Playlist addMusicToPlaylist(String playlistTitle, String musicTitle) {
-        if(!(controllerUtils.isStringValid(playlistTitle) && controllerUtils.isStringValid(musicTitle) && controllerUtils.musicExists(musicTitle) && playlistExists(playlistTitle))){
+        if(!(controllerUtils.isStringValid(playlistTitle) && controllerUtils.isStringValid(musicTitle) && controllerUtils.musicExists(musicTitle) && playlistExists(playlistTitle) && !musicInPlaylist(playlistTitle, musicTitle))){
             return null;
         }
         playlistService.addMusica(playlistTitle, musicTitle);
@@ -71,7 +74,7 @@ public class PlaylistController implements IPlaylistController{
     @Override
     public Boolean deletePlaylist(String playlistTitle) {
         if (controllerUtils.isStringValid(playlistTitle) && playlistExists(playlistTitle)){
-            playlistService.deletaPlaylist(playlistTitle);
+            playlistService.deletaPlaylist(playlistService.acessaPlaylist(playlistTitle).getId());
             return true;
         }
         return false;
@@ -83,6 +86,11 @@ public class PlaylistController implements IPlaylistController{
     
     public Boolean musicInPlaylist(String playlistTitle, String musicTitle){
         List<Musica> playlist = new ArrayList<>(playlistService.acessaPlaylist(playlistTitle).getMusicas());
-        return playlist.contains(controllerUtils.accessMusic(musicTitle));
+        for (Musica musica : playlist) {
+            if (musica.getTitulo().equals(musicTitle)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

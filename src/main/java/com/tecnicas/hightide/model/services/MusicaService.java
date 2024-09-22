@@ -16,15 +16,18 @@ import javax.persistence.Persistence;
  * @author Victor Moreno
  */
 public class MusicaService implements IMusicaService {
-
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    
+    public MusicaService(EntityManagerFactory entityFactory) {
+        this.emf = entityFactory;
+    }
+    
     @Override
     public Musica createMusica(String titulo, String artista, String capa, String url, Musica.Genero genero) {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
         Musica musica = null;
+        EntityManager em = emf.createEntityManager();
         try {
-            emf = Persistence.createEntityManagerFactory("persistence.xml");
-            em = emf.createEntityManager();
             em.getTransaction().begin();
             musica = new Musica(null, capa, titulo, artista, url, genero);
             em.persist(musica);
@@ -32,25 +35,17 @@ public class MusicaService implements IMusicaService {
          } catch(Exception e) {
              if (em != null && em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
-             }
+             } 
          } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }
+            em.close(); 
         }
         return musica;
     }
 
     @Override
     public Boolean deleteMusica(Integer id) {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
+        EntityManager em = emf.createEntityManager();
         try {
-            emf = Persistence.createEntityManagerFactory("persistence.xml");
-            em = emf.createEntityManager();
             em.getTransaction().begin();
             
             Musica musica = em.find(Musica.class, id);
@@ -63,24 +58,16 @@ public class MusicaService implements IMusicaService {
              }
              return false;
          } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }
-        }
+            em.close(); 
+        } 
         return true;
     }
 
     @Override
     public List<Musica> listaTodasMusicas() {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
+        EntityManager em = emf.createEntityManager();
         List<Musica> musicas = null;
         try {
-            emf = Persistence.createEntityManagerFactory("persistence.xml");
-            em = emf.createEntityManager();
             em.getTransaction().begin();
             
             musicas = em.createQuery("SELECT m FROM Musica m", Musica.class).getResultList();
@@ -91,21 +78,14 @@ public class MusicaService implements IMusicaService {
                 em.getTransaction().rollback();
              }
          } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }    
-            
-        }
+            em.close(); 
+        }  
         return musicas;
     }
 
     @Override
     public Musica musicaByTitulo(String titulo) {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
+        EntityManager em = emf.createEntityManager();
         Musica musicaByTitle = null;
         try {
             List<Musica> musicas = listaTodasMusicas();
@@ -119,13 +99,8 @@ public class MusicaService implements IMusicaService {
                 em.getTransaction().rollback();
              }
          } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }
-        }
+            em.close(); 
+        }  
         return musicaByTitle;
     }
     

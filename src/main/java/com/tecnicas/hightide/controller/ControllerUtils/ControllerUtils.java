@@ -7,13 +7,18 @@ package com.tecnicas.hightide.controller.ControllerUtils;
 import com.tecnicas.hightide.model.models.Musica;
 import java.io.File;
 import com.tecnicas.hightide.model.services.MusicaService;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
  * @author rivan
  */
 public class ControllerUtils {
-    MusicaService musicService = new MusicaService();
+    private MusicaService musicService;
+    public ControllerUtils(EntityManagerFactory entityFactory) {
+        musicService = new MusicaService(entityFactory);
+    }
     
     public Boolean musicExists(String musicTitle){
         return musicService.musicaByTitulo(musicTitle) != null;

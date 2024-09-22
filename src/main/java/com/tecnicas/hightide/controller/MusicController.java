@@ -10,14 +10,17 @@ import com.tecnicas.hightide.controller.interfaces.IMusicaController;
 import com.tecnicas.hightide.model.models.Musica;
 import com.tecnicas.hightide.model.services.MusicaService;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
  * @author rivan
  */
 public class MusicController implements IMusicaController{
-    MusicaService musicaService = new MusicaService();
-    ControllerUtils controllerUtils = new ControllerUtils();
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence.xml");
+    MusicaService musicaService = new MusicaService(emf);
+    ControllerUtils controllerUtils = new ControllerUtils(emf);
     
     @Override
     public List<Musica> listAllMusics() {

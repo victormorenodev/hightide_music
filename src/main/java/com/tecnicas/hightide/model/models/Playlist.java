@@ -22,7 +22,7 @@ public class Playlist implements Serializable{
     private Integer id;
     private String titulo;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="playlist_musicas", joinColumns=
             {@JoinColumn(name="playlist_id")}, inverseJoinColumns=
                     {@JoinColumn(name="musicas_id")})
