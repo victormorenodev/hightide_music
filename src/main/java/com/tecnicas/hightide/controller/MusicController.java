@@ -49,13 +49,13 @@ public class MusicController implements IMusicaController{
         }
         
         //authenticationMusic(MusicUrl) / verifica se é mp3
-        String urlcapa = "capa.png";
+        String urlcapa = "src/main/resources/album.png";
         String title = getMusicNameFromURL(musicUrl);
         
         //title <- nome do arquivo .mp3
         
         //musicaByTitutlo(title) / verifica se já existe musica com esse titulo
-        if(!musicExists(title)){
+        if(musicExists(title)){
             return null;
         }
         
@@ -83,13 +83,13 @@ public class MusicController implements IMusicaController{
     }
 
     @Override
-    public Musica playMusic(String musicTitle) {
+    public String playMusic(String musicTitle) {
         //verifica se está vazio
         if(!(isStringValid(musicTitle) && musicExists(musicTitle))){
             return null;
         }
         
-        return musicaService.musicaByTitulo(musicTitle);
+        return musicaService.musicaByTitulo(musicTitle).getUrl();
         
         //musicaByTitulo(musicTitle);
         //retorna musica se != null
@@ -110,7 +110,7 @@ public class MusicController implements IMusicaController{
     }
     
     public static String getMusicNameFromURL(String musicUrl){
-        return musicUrl.substring(musicUrl.lastIndexOf("/") + 1 );
+        return musicUrl.substring(musicUrl.lastIndexOf("/") + 1, musicUrl.length()-4);
     }
     
 }

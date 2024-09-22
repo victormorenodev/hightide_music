@@ -4,7 +4,7 @@
 
 package com.tecnicas.hightide;
 
-import com.tecnicas.hightide.model.models.Musica;
+import com.tecnicas.hightide.controller.MusicController;
 import static com.tecnicas.hightide.model.models.Musica.Genero.*;
 import com.tecnicas.hightide.model.services.MusicaService;
         
@@ -15,20 +15,14 @@ import com.tecnicas.hightide.model.services.MusicaService;
 public class Hightide {
 
     public static void main(String[] args) {
-        MusicaService musicaService = new MusicaService();
-
-        musicaService.createMusica("Musica Rap1", "Rivanio", "Capa", "url", RAP);
-        musicaService.createMusica("Musica Rap2", "Rivanio", "Capa", "url", RAP);
-        musicaService.createMusica("Musica Pop1", "RivanioPop", "Capa", "url", POP);
         
-     
-        System.out.println("Musicas: \n + " + musicaService.listaTodasMusicas());
+        MusicController musicController = new MusicController();
+        String musicTestUrl = "src/main/resources/musics/InDaClub.mp3";
         
-        Musica musicaPop = musicaService.musicaByTitulo("Musica Pop1");
-        System.out.println("\n\nMusica Pop: " + musicaPop);
-    
-        musicaService.deleteMusica(musicaPop.getId());
+        musicController.addMusic(musicTestUrl, RAP, "50 Cent");
+        //musicController.deleteMusic("InDaClub");
+        String musicaUrl = musicController.playMusic("InDaClub");
         
-        System.out.println("\n\nMusicas depois de deletar Musica Pop: \n" + musicaService.listaTodasMusicas());
+        MP3Player.tocarMusica(musicaUrl);
     }
 }

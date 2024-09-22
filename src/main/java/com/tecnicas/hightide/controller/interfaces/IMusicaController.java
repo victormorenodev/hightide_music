@@ -17,5 +17,5 @@ public interface IMusicaController {
     public List<Musica> listMusicsByGender(Genero gender);
     public Musica addMusic(String musicUrl, Genero gender, String artist);
     public Boolean deleteMusic(String musicTitle);
-    public Musica playMusic(String musicTitle);
+    public String playMusic(String musicTitle);
 }
