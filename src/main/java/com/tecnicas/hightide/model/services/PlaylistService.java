@@ -7,25 +7,28 @@ package com.tecnicas.hightide.model.services;
 import com.tecnicas.hightide.model.interfaces.IPlaylistService;
 import com.tecnicas.hightide.model.models.Musica;
 import com.tecnicas.hightide.model.models.Playlist;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *
  * @author Victor Moreno
  */
 public class PlaylistService implements IPlaylistService{
-
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    
+    public PlaylistService(EntityManagerFactory entityFactory) {
+        this.emf = entityFactory;
+    }
+    
     @Override
     public Playlist createPlaylist(String titulo, List<Musica> musicas) {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
+        EntityManager em = emf.createEntityManager();
         Playlist playlist = null;
         try {
-            emf = Persistence.createEntityManagerFactory("persistence.xml");
-            em = emf.createEntityManager();
             em.getTransaction().begin();
             
             playlist = new Playlist(null, titulo, musicas);
@@ -37,27 +40,19 @@ public class PlaylistService implements IPlaylistService{
                 em.getTransaction().rollback();
              }
          } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }
-        }
+            em.close(); 
+        } 
         return playlist;
     }
 
     @Override
     public void addMusica(String playlistTitulo, String musicaTitulo) {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
+        EntityManager em = emf.createEntityManager();
         Playlist playlist = null;
         Musica musica = null;
-        MusicaService musicaService = new MusicaService();
+        MusicaService musicaService = new MusicaService(emf);
         
         try {
-            emf = Persistence.createEntityManagerFactory("persistence.xml");
-            em = emf.createEntityManager();
             em.getTransaction().begin();
             
             playlist = acessaPlaylist(playlistTitulo);
@@ -71,31 +66,27 @@ public class PlaylistService implements IPlaylistService{
                 em.getTransaction().rollback();
              }
          } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }
-        }
+            em.close(); 
+        } 
     }
 
     @Override
     public void removeMusica(String playlistTitulo, String musicaTitulo) {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
         Playlist playlist = null;
-        Musica musica = null;
-        MusicaService musicaService = new MusicaService();
-        
+        EntityManager em = emf.createEntityManager();
         try {
-            emf = Persistence.createEntityManagerFactory("persistence.xml");
-            em = emf.createEntityManager();
             em.getTransaction().begin();
             
             playlist = acessaPlaylist(playlistTitulo);
-            musica = musicaService.musicaByTitulo(musicaTitulo);
-            playlist.getMusicas().remove(musica);
+           
+            for (Musica musica : playlist.getMusicas()) {
+                if (musica.getTitulo().equals(musicaTitulo)) {
+                    List<Musica> novaLista = new ArrayList<>(playlist.getMusicas());
+                    novaLista.remove(musica);
+                    playlist.setMusicas(novaLista);
+                }
+            }
+            
             em.merge(playlist);
             
             em.getTransaction().commit();
@@ -104,22 +95,14 @@ public class PlaylistService implements IPlaylistService{
                 em.getTransaction().rollback();
              }
          } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }
-        }
+            em.close(); 
+        } 
     }
 
     @Override
-    public Boolean deletaPlaylist(String playlistId) {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
+    public Boolean deletaPlaylist(Integer playlistId) {
+        EntityManager em = emf.createEntityManager();
         try {
-            emf = Persistence.createEntityManagerFactory("persistence.xml");
-            em = emf.createEntityManager();
             em.getTransaction().begin();
             
             Playlist playlist = em.find(Playlist.class, playlistId);
@@ -132,24 +115,16 @@ public class PlaylistService implements IPlaylistService{
              }
              return false;
          } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }
-        }
+            em.close(); 
+        } 
         return true;
     }
 
     @Override
     public List<Playlist> listaPlaylists() {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
+        EntityManager em = emf.createEntityManager();
         List<Playlist> playlists = null;
         try {
-            emf = Persistence.createEntityManagerFactory("persistence.xml");
-            em = emf.createEntityManager();
             em.getTransaction().begin();
             
             playlists = em.createQuery("SELECT p FROM Playlist p", Playlist.class).getResultList();
@@ -160,20 +135,14 @@ public class PlaylistService implements IPlaylistService{
                 em.getTransaction().rollback();
              }
          } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }
-        }
+            em.close(); 
+        } 
         return playlists;
     }
 
     @Override
     public Playlist acessaPlaylist(String playlistTitle) {
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
+        EntityManager em = emf.createEntityManager();
         Playlist playlistByTitle = null;
         try {
             List<Playlist> playlists = listaPlaylists();
@@ -187,13 +156,8 @@ public class PlaylistService implements IPlaylistService{
                 em.getTransaction().rollback();
              }
          } finally {
-            if (em != null) {
-                em.close();
-            }
-            if (emf != null) {
-                emf.close();
-            }
-        }
+            em.close(); 
+        } 
         return playlistByTitle;
     }
     

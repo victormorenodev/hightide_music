@@ -18,7 +18,7 @@ public interface IPlaylistController {
     public Playlist playPlaylist(String playlistTitle);
     public Playlist addMusicToPlaylist(String playlistTitle, String musicTitle);
     public Playlist removeMusicFromPlaylist(String playlistTitle, String musicTitle);
-    public List<Musica> listaMusicasPlaylist(String playlistId);
+    public List<Musica> listaMusicasPlaylist(String playlistTitle);
     public Playlist createPlaylist(String playlistTitle);
     public Boolean deletePlaylist(String playlistTitle);
 }
