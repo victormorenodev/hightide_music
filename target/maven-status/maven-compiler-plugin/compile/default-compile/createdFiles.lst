@@ -3,7 +3,7 @@ com\tecnicas\hightide\view\telaHightide.class
 com\tecnicas\hightide\controller\ControllerUtils\ControllerUtils.class
 com\tecnicas\hightide\model\models\Musica.class
 com\tecnicas\hightide\model\services\MusicaService.class
-com\tecnicas\hightide\MP3Player.class
+com\tecnicas\hightide\view\telaHightide$2.class
 com\tecnicas\hightide\model\models\Musica$Genero.class
 com\tecnicas\hightide\model\interfaces\IMusicaService.class
 com\tecnicas\hightide\model\services\PlaylistService.class
@@ -14,3 +14,4 @@ com\tecnicas\hightide\controller\PlaylistController.class
 com\tecnicas\hightide\Hightide$1.class
 com\tecnicas\hightide\controller\MusicController.class
 com\tecnicas\hightide\controller\interfaces\IPlaylistController.class
+com\tecnicas\hightide\view\telaHightide$1.class

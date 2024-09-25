@@ -4,6 +4,7 @@
  */
 package com.tecnicas.hightide.controller;
 
+import com.tecnicas.hightide.MusicPlayer;
 import com.tecnicas.hightide.controller.ControllerUtils.ControllerUtils;
 import java.util.ArrayList;
 import com.tecnicas.hightide.controller.interfaces.IMusicaController;
@@ -21,6 +22,10 @@ public class MusicController implements IMusicaController{
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence.xml");
     MusicaService musicaService = new MusicaService(emf);
     ControllerUtils controllerUtils = new ControllerUtils(emf);
+    MusicPlayer player = new MusicPlayer();
+    Musica musicaAtual = null;
+    Boolean isPlaying = false;
+    //Integer posicaoAtualMusica = 0;
     
     @Override
     public List<Musica> listAllMusics() {
@@ -87,15 +92,58 @@ public class MusicController implements IMusicaController{
     }
 
     @Override
-    public String playMusic(String musicTitle) {
-        //verifica se está vazio
-        if(!(controllerUtils.isStringValid(musicTitle) && controllerUtils.musicExists(musicTitle))){
-            return null;
+    public Musica playMusic(String musicTitle) {
+        if((controllerUtils.isStringValid(musicTitle) && controllerUtils.musicExists(musicTitle))){
+            if (musicaAtual == null) {
+                musicaAtual = controllerUtils.accessMusic(musicTitle);
+                player.tocarMusica(musicaAtual.getUrl());
+                isPlaying = true;
+            } else {
+                if (musicaAtual.getTitulo().equals(musicTitle) == false) {
+                    //posicaoAtualMusica = 0;
+                    musicaAtual = controllerUtils.accessMusic(musicTitle);
+                    player.pararMusica();
+                    player.tocarMusica(musicaAtual.getUrl());
+                    isPlaying = true;
+                } else {
+                    if (isPlaying == true) {
+                        isPlaying = false;
+                        player.pausarMusica();
+                    } else {
+                        isPlaying = true;
+                        player.retomarMusica();
+                    }
+                }
+            }
         }
-        
-        return musicaService.musicaByTitulo(musicTitle).getUrl();
-        
         //musicaByTitulo(musicTitle);
         //retorna musica se != null
+        return musicaAtual;
     }
+
+    public Musica getMusicaAtual() {
+        return musicaAtual;
+    }
+
+    public void setMusicaAtual(Musica musicaAtual) {
+        this.musicaAtual = musicaAtual;
+    }
+
+    public Boolean getIsPlaying() {
+        return isPlaying;
+    }
+
+    public void setIsPlaying(Boolean isPlaying) {
+        this.isPlaying = isPlaying;
+    }
+
+    /*public Integer getPosicaoAtualMusica() {
+        return posicaoAtualMusica;
+    }
+
+    public void setPosicaoAtualMusica(int posicaoAtualMusica) {
+        this.posicaoAtualMusica = posicaoAtualMusica;
+    }*/
+    
+    
 }

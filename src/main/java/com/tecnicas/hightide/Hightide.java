@@ -21,42 +21,22 @@ import javax.swing.JOptionPane;
 public class Hightide {
 
     public static void main(String[] args) {
-        /*
+     
         MusicController musicController = new MusicController();
         PlaylistController playlistController = new PlaylistController();
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence.xml");
         
-        String musicTestUrl = "src/main/resources/musics/InDaClub.mp3";
-        String musicTestUrl2 = "src/main/resources/musics/FacasEBalas.mp3";
+        String musicTestUrl = "src/main/resources/musics/InDaClub.wav";
+        String musicTestUrl2 = "src/main/resources/musics/Machuca.wav";
         musicController.addMusic(musicTestUrl, RAP, "50 Cent");
-        musicController.addMusic(musicTestUrl2, RAP, "MC VV");
+        musicController.addMusic(musicTestUrl2, RAP, "DJ Arana");
         
         playlistController.createPlaylist("Rivanio Tracks");
-        playlistController.addMusicToPlaylist("Rivanio Tracks", "ViolentCrimes");
+        playlistController.addMusicToPlaylist("Rivanio Tracks", "Machuca");
         playlistController.addMusicToPlaylist("Rivanio Tracks", "InDaClub");
         
-        System.out.println("\n\n Playlists: "+playlistController.listAllPlaylists());
-        System.out.println("\n\n Músicas do Rivânio Tracks: "+playlistController.listaMusicasPlaylist("Rivanio Tracks"));
-        System.out.println("\n\n InDaClub is in Rivanio Tracks: "+playlistController.musicInPlaylist("Rivanio Tracks", "InDaClub"));
-        
-        playlistController.removeMusicFromPlaylist("Rivanio Tracks", "InDaClub");
-        System.out.println("\n\n InDaClub is in Rivanio Tracks após deletar: "+playlistController.musicInPlaylist("Rivanio Tracks", "InDaClub"));
-        
-        System.out.println("\n\nRivanio Tracks existe: "+playlistController.playlistExists("Rivanio Tracks"));
-        
-        playlistController.deletePlaylist("Rivanio Tracks");
-        
-        System.out.println("\n\nRivanio Tracks existe após deletar: "+playlistController.playlistExists("Rivanio Tracks"));
-        System.out.println("\n\n");
-        
-        String musicaUrl = musicController.playMusic("FacasEBalas");
-        
         emf.close();
-        MP3Player.tocarMusica(musicaUrl);
-*/
-        
-        
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
