@@ -34,7 +34,10 @@ public class Hightide {
         
         playlistController.createPlaylist("Rivanio Tracks");
         playlistController.addMusicToPlaylist("Rivanio Tracks", "Machuca");
-        playlistController.addMusicToPlaylist("Rivanio Tracks", "InDaClub");
+        playlistController.createPlaylist("Todas as Musicas");
+        playlistController.addMusicToPlaylist("Todas as Musicas", "InDaClub");
+        playlistController.addMusicToPlaylist("Todas as Musicas", "Machuca");
+        
         
         emf.close();
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

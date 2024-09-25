@@ -14,6 +14,7 @@ import java.util.List;
  * @author Victor Moreno
  */
 public interface IPlaylistController {
+    public List<String> listAllGenders();
     public List<Playlist> listAllPlaylists();
     public Playlist playPlaylist(String playlistTitle);
     public Playlist addMusicToPlaylist(String playlistTitle, String musicTitle);
