@@ -383,14 +383,6 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
         }
     }//GEN-LAST:event_playlistsListValueChanged
 
-    private void playlistsListPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_playlistsListPropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_playlistsListPropertyChange
-
-    private void playlistsListAncestorMoved(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_playlistsListAncestorMoved
-        // TODO add your handling code here:
-    }//GEN-LAST:event_playlistsListAncestorMoved
-
     private void NewPlaylistButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewPlaylistButtonActionPerformed
         // TODO add your handling code here:
         new CreatPlaylistPanel(this).setVisible(true);
