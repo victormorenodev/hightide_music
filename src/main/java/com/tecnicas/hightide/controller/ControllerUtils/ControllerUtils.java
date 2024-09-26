@@ -5,6 +5,7 @@
 package com.tecnicas.hightide.controller.ControllerUtils;
 
 import com.tecnicas.hightide.model.models.Musica;
+import com.tecnicas.hightide.model.models.Musica.Genero;
 import java.io.File;
 import com.tecnicas.hightide.model.services.MusicaService;
 import javax.persistence.EntityManager;
@@ -22,6 +23,15 @@ public class ControllerUtils {
     
     public Boolean musicExists(String musicTitle){
         return musicService.musicaByTitulo(musicTitle) != null;
+    }
+    
+    public Boolean isValidGender(String gender) {
+        try {
+            Genero.valueOf(gender.toUpperCase());  // Tenta converter
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;  // Caso lance exceção, a string não é válida
+        }
     }
     
     public Musica accessMusic(String musicTitle){

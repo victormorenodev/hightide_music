@@ -23,6 +23,7 @@ public class MusicController implements IMusicaController{
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence.xml");
     MusicaService musicaService = new MusicaService(emf);
     ControllerUtils controllerUtils = new ControllerUtils(emf);
+    PlaylistController playlistController = new PlaylistController();
     
     @Override
     public List<Musica> listAllMusics() {
@@ -50,9 +51,9 @@ public class MusicController implements IMusicaController{
     }
 
     @Override
-    public Musica addMusic(String musicUrl, Musica.Genero gender, String artist) {
+    public Musica addMusic(String musicUrl, String gender, String artist) {
         //verifica se tem algum campo vazio
-        if (!(controllerUtils.isStringValid(musicUrl) && controllerUtils.isStringValid(artist)) && controllerUtils.isMusicValid(musicUrl) ){
+        if (!(controllerUtils.isStringValid(musicUrl) && controllerUtils.isStringValid(artist) && controllerUtils.isStringValid(gender)) && controllerUtils.isMusicValid(musicUrl) && controllerUtils.isValidGender(gender)){
             return null;
         }
         
@@ -71,9 +72,12 @@ public class MusicController implements IMusicaController{
         
         
         //createMusica(title, artist, urlcapa, musicUrl, gender)
-        return musicaService.createMusica(title, artist, urlcapa, musicUrl, gender);
+        Genero genero = Genero.valueOf(gender.toUpperCase());
+        System.out.println("\n \n "+ gender + title +"\n \n \n");
+        musicaService.createMusica(title, artist, urlcapa, musicUrl, genero);
         
-        
+        playlistController.addMusicToPlaylist(gender, title);
+        return musicaService.musicaByTitulo(title);
     }
 
     @Override

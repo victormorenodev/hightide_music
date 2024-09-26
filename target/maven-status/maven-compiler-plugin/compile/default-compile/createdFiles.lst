@@ -1,6 +1,5 @@
 com\tecnicas\hightide\controller\interfaces\IMusicaController.class
 com\tecnicas\hightide\controller\ControllerUtils\ControllerUtils.class
-com\tecnicas\hightide\view\telaHightide$8.class
 com\tecnicas\hightide\controller\QueueController.class
 com\tecnicas\hightide\view\telaHightide$3.class
 com\tecnicas\hightide\controller\interfaces\IQueueController.class

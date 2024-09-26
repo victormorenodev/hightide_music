@@ -57,11 +57,8 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
         playlistsList.setModel(playlistListModel);
         
         
-        List<String> gendersObjectList = new ArrayList<>(playlistController.listAllGenders());
-        for (String genero : gendersObjectList){
-            listGender.addElement(genero);
-        }
-        gendersList.setModel(listGender);
+      
+        
         
     }
     
@@ -112,9 +109,6 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
         jScrollPane2 = new javax.swing.JScrollPane();
         playlistsList = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        gendersList = new javax.swing.JList<>();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HighTide");
@@ -186,17 +180,6 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
         jLabel3.setForeground(new java.awt.Color(51, 102, 0));
         jLabel3.setText("Playlists");
 
-        gendersList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                gendersListValueChanged(evt);
-            }
-        });
-        jScrollPane3.setViewportView(gendersList);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(51, 0, 51));
-        jLabel4.setText("Gêneros");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -206,29 +189,32 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(labelMusicaAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelArtistaAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(labelMusicaAtual, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                .addComponent(labelArtistaAtual, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                             .addComponent(jLabel3))
-                        .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
                                 .addComponent(previousMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nextMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(55, Short.MAX_VALUE))))
+                                .addComponent(nextMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(211, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(32, 32, 32))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(68, 68, 68))))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,33 +226,32 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(12, 12, 12)
-                        .addComponent(jScrollPane2))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
                         .addComponent(jLabel2)
-                        .addGap(12, 12, 12)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(labelMusicaAtual)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(playButton)
-                    .addComponent(nextMusicButton)
-                    .addComponent(previousMusicButton)
-                    .addComponent(labelArtistaAtual))
-                .addGap(46, 46, 46))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(playButton)
+                        .addComponent(nextMusicButton)
+                        .addComponent(previousMusicButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(labelMusicaAtual)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelArtistaAtual)))
+                .addGap(36, 36, 36))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void musicsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_musicsListValueChanged
+        if(musicsList.getSelectedValue() != null){
         musicaSelecionada = musicController.musicByTitle(musicsList.getSelectedValue().split(" - ")[0]);
         managePlayButton();
+        }
         //jLabel7.setText(musicaSelecionada.getTitulo());
     }//GEN-LAST:event_musicsListValueChanged
 
@@ -344,7 +329,7 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
                 listModel.addElement(musica.getTitulo() + " - " + musica.getArtista());
             }
             musicsList.setModel(listModel);
-            
+            queue.setCurrentQueue(musicsObjectListPlaylist);
         }
     }//GEN-LAST:event_playlistsListValueChanged
 
@@ -356,19 +341,6 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
         // TODO add your handling code here:
     }//GEN-LAST:event_playlistsListAncestorMoved
 
-    private void gendersListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_gendersListValueChanged
-        if (!gendersList.getSelectedValue().equals("") || gendersList != null){
-            listModel.clear();
-            List<Musica> musicsObjectListGender = new ArrayList (musicController.listMusicsByGender(gendersList.getSelectedValue()));
-            System.out.println("\n\n\n ENTROU NO GENERO \n\n\n");
-            for (Musica musica : musicsObjectListGender) {
-                listModel.addElement(musica.getTitulo() + " - " + musica.getArtista());
-            }
-            musicsList.setModel(listModel);
-            
-        }
-    }//GEN-LAST:event_gendersListValueChanged
-
     /**
      * @param args the command line arguments
      */
@@ -376,14 +348,11 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
      // Criando um JPanel
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> gendersList;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel labelArtistaAtual;
     private javax.swing.JLabel labelMusicaAtual;
     private javax.swing.JList<String> musicsList;

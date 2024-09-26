@@ -6,6 +6,7 @@ package com.tecnicas.hightide;
 
 import com.tecnicas.hightide.controller.MusicController;
 import com.tecnicas.hightide.controller.PlaylistController;
+import com.tecnicas.hightide.model.models.Musica.Genero;
 import static com.tecnicas.hightide.model.models.Musica.Genero.*;
 import com.tecnicas.hightide.view.telaHightide;
 import javax.persistence.EntityManagerFactory;
@@ -27,9 +28,14 @@ public class Hightide {
         String musicTestUrl = "src/main/resources/musics/InDaClub.wav";
         String musicTestUrl2 = "src/main/resources/musics/Machuca.wav";
         String musicTestUrl3 = "src/main/resources/musics/Pinguinos.wav";
-        musicController.addMusic(musicTestUrl, RAP, "50 Cent");
-        musicController.addMusic(musicTestUrl2, RAP, "DJ Arana");
-        musicController.addMusic(musicTestUrl3, POP, "La van a Mascar");
+        for (Genero genero : Genero.values()) {
+            playlistController.createPlaylist(genero.toString().toUpperCase());
+        }
+        musicController.addMusic(musicTestUrl, "RAP", "50 Cent");
+        musicController.addMusic(musicTestUrl2, "RAP", "DJ Arana");
+        musicController.addMusic(musicTestUrl3, "POP", "La van a Mascar");
+       
+        
         
         playlistController.createPlaylist("Rivanio Tracks");
         playlistController.addMusicToPlaylist("Rivanio Tracks", "InDaClub");

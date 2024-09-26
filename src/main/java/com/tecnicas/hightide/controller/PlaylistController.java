@@ -39,10 +39,11 @@ public class PlaylistController implements IPlaylistController{
     
     @Override
     public Playlist addMusicToPlaylist(String playlistTitle, String musicTitle) {
-        if(!(controllerUtils.isStringValid(playlistTitle) && controllerUtils.isStringValid(musicTitle) && controllerUtils.musicExists(musicTitle) && playlistExists(playlistTitle) && !musicInPlaylist(playlistTitle, musicTitle))){
+        if(!(controllerUtils.isStringValid(playlistTitle) && controllerUtils.isStringValid(musicTitle) && controllerUtils.musicExists(musicTitle) && playlistExists(playlistTitle) && !(musicInPlaylist(playlistTitle, musicTitle)))){
             return null;
         }
         playlistService.addMusica(playlistTitle, musicTitle);
+        System.out.println("\n \n OIIIIIIIIIII \n \n");
         return playlistService.acessaPlaylist(playlistTitle);
     }
 

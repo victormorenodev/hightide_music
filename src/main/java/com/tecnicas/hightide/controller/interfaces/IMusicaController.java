@@ -15,7 +15,7 @@ import java.util.List;
 public interface IMusicaController {
     public List<Musica> listAllMusics();
     public List<Musica> listMusicsByGender(String gender);
-    public Musica addMusic(String musicUrl, Genero gender, String artist);
+    public Musica addMusic(String musicUrl, String gender, String artist);
     public Boolean deleteMusic(String musicTitle);
     //public Musica playMusic(String musicTitle);
     public Musica musicByTitle(String musicTitle);
