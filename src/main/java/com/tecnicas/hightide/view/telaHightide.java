@@ -74,8 +74,8 @@ public class telaHightide extends javax.swing.JFrame {
         labelMusicaAtual = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        nextMButton = new javax.swing.JButton();
-        backMButton = new javax.swing.JButton();
+        nextMusicButton = new javax.swing.JButton();
+        previousMusicButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         playlistsList = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
@@ -116,17 +116,17 @@ public class telaHightide extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Todas as músicas");
 
-        nextMButton.setText(">>");
-        nextMButton.addActionListener(new java.awt.event.ActionListener() {
+        nextMusicButton.setText(">>");
+        nextMusicButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextMButtonActionPerformed(evt);
+                nextMusicButtonActionPerformed(evt);
             }
         });
 
-        backMButton.setText("<<");
-        backMButton.addActionListener(new java.awt.event.ActionListener() {
+        previousMusicButton.setText("<<");
+        previousMusicButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backMButtonActionPerformed(evt);
+                previousMusicButtonActionPerformed(evt);
             }
         });
 
@@ -185,11 +185,11 @@ public class telaHightide extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(backMButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(previousMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nextMButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(nextMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,8 +222,8 @@ public class telaHightide extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(playButton)
-                    .addComponent(nextMButton)
-                    .addComponent(backMButton)
+                    .addComponent(nextMusicButton)
+                    .addComponent(previousMusicButton)
                     .addComponent(labelArtistaAtual))
                 .addGap(46, 46, 46))
         );
@@ -248,13 +248,13 @@ public class telaHightide extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_playButtonActionPerformed
 
-    private void nextMButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMButtonActionPerformed
+    private void nextMusicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMusicButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nextMButtonActionPerformed
+    }//GEN-LAST:event_nextMusicButtonActionPerformed
 
-    private void backMButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backMButtonActionPerformed
+    private void previousMusicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousMusicButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_backMButtonActionPerformed
+    }//GEN-LAST:event_previousMusicButtonActionPerformed
 
     private void playlistsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_playlistsListValueChanged
         // TODO add your handling code here:
@@ -297,7 +297,6 @@ public class telaHightide extends javax.swing.JFrame {
      // Criando um JPanel
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton backMButton;
     private javax.swing.JList<String> gendersList;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -309,8 +308,9 @@ public class telaHightide extends javax.swing.JFrame {
     private javax.swing.JLabel labelArtistaAtual;
     private javax.swing.JLabel labelMusicaAtual;
     private javax.swing.JList<String> musicsList;
-    private javax.swing.JButton nextMButton;
+    private javax.swing.JButton nextMusicButton;
     private javax.swing.JToggleButton playButton;
     private javax.swing.JList<String> playlistsList;
+    private javax.swing.JButton previousMusicButton;
     // End of variables declaration//GEN-END:variables
 }
