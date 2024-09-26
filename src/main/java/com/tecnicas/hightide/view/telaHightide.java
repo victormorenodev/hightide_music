@@ -48,6 +48,7 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
         playButton.setEnabled(false);
         nextMusicButton.setEnabled(false);
         previousMusicButton.setEnabled(false);
+        addMusicPlaylistButton.setEnabled(false);
         
         playlistListModel = new DefaultListModel<>();
         playlistController = new PlaylistController();
@@ -61,13 +62,34 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
             playlistListModel.addElement(playlist.getTitulo());
         }
         playlistsList.setModel(playlistListModel);
+        managePlayButton();
         }
+     
+     public void refreshMusics() {
+        if (!playlistsList.getSelectedValue().equals("") || playlistsList != null){
+            listModel.clear();
+            addMusicPlaylistButton.setEnabled(true);
+            List<Musica> musicsObjectListPlaylist = new ArrayList (playlistController.listaMusicasPlaylist(playlistsList.getSelectedValue()));
+            for (Musica musica : musicsObjectListPlaylist) {
+                listModel.addElement(musica.getTitulo() + " - " + musica.getArtista());
+            }
+            playlistLabel.setText(playlistsList.getSelectedValue());
+            musicsList.setModel(listModel);
+            queue.setCurrentQueue(musicsObjectListPlaylist);
+        }
+        playButton.setEnabled(false);
+        nextMusicButton.setEnabled(false);
+        previousMusicButton.setEnabled(false);
+        managePlayButton();
+     }
     
      private void managePlayButton() {
         if (playButton.isEnabled() == false || nextMusicButton.isEnabled() == false || previousMusicButton.isEnabled() == false) {
-            playButton.setEnabled(true);
-            nextMusicButton.setEnabled(true);
-            previousMusicButton.setEnabled(true);
+            if (player.getMusicaAtual() != null || musicaSelecionada != null) {
+                playButton.setEnabled(true);
+                nextMusicButton.setEnabled(true);
+                previousMusicButton.setEnabled(true);
+            }
         }
         // se o player seleciona uma música diferente da atual, ou não há música atual ainda
         if (player.getMusicaAtual() != null) {
@@ -104,13 +126,14 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
         labelArtistaAtual = new javax.swing.JLabel();
         labelMusicaAtual = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        playlistLabel = new javax.swing.JLabel();
         nextMusicButton = new javax.swing.JButton();
         previousMusicButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         playlistsList = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
         NewPlaylistButton = new javax.swing.JButton();
+        addMusicPlaylistButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HighTide");
@@ -142,8 +165,8 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
         jLabel1.setForeground(new java.awt.Color(51, 204, 0));
         jLabel1.setText("HighTide");
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setText("Todas as músicas");
+        playlistLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        playlistLabel.setText("Selecione uma playlist");
 
         nextMusicButton.setText(">>");
         nextMusicButton.addActionListener(new java.awt.event.ActionListener() {
@@ -189,6 +212,13 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
             }
         });
 
+        addMusicPlaylistButton.setText("Adicionar música à playlist");
+        addMusicPlaylistButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addMusicPlaylistButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -196,9 +226,6 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -225,15 +252,22 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(32, 32, 32))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(68, 68, 68))))))))
+                                        .addComponent(playlistLabel)
+                                        .addGap(68, 68, 68))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addMusicPlaylistButton)
+                        .addGap(56, 56, 56))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(addMusicPlaylistButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -242,10 +276,10 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
                         .addGap(9, 9, 9)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(playlistLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(playButton)
@@ -338,10 +372,12 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
         // TODO add your handling code here:
         if (!playlistsList.getSelectedValue().equals("") || playlistsList != null){
             listModel.clear();
+            addMusicPlaylistButton.setEnabled(true);
             List<Musica> musicsObjectListPlaylist = new ArrayList (playlistController.listaMusicasPlaylist(playlistsList.getSelectedValue()));
             for (Musica musica : musicsObjectListPlaylist) {
                 listModel.addElement(musica.getTitulo() + " - " + musica.getArtista());
             }
+            playlistLabel.setText(playlistsList.getSelectedValue());
             musicsList.setModel(listModel);
             queue.setCurrentQueue(musicsObjectListPlaylist);
         }
@@ -360,6 +396,11 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
         new CreatPlaylistPanel(this).setVisible(true);
     }//GEN-LAST:event_NewPlaylistButtonActionPerformed
 
+    private void addMusicPlaylistButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMusicPlaylistButtonActionPerformed
+        // TODO add your handling code here:
+        new AddToPlaylistPanel(this).setVisible(true);
+    }//GEN-LAST:event_addMusicPlaylistButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -368,8 +409,8 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton NewPlaylistButton;
+    private javax.swing.JButton addMusicPlaylistButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -378,6 +419,7 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
     private javax.swing.JList<String> musicsList;
     private javax.swing.JButton nextMusicButton;
     private javax.swing.JToggleButton playButton;
+    private javax.swing.JLabel playlistLabel;
     private javax.swing.JList<String> playlistsList;
     private javax.swing.JButton previousMusicButton;
     // End of variables declaration//GEN-END:variables
