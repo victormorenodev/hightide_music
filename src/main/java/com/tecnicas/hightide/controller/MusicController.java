@@ -9,7 +9,9 @@ import com.tecnicas.hightide.controller.ControllerUtils.ControllerUtils;
 import java.util.ArrayList;
 import com.tecnicas.hightide.controller.interfaces.IMusicaController;
 import com.tecnicas.hightide.model.models.Musica;
+import com.tecnicas.hightide.model.models.Musica.Genero;
 import com.tecnicas.hightide.model.services.MusicaService;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -35,20 +37,24 @@ public class MusicController implements IMusicaController{
     }
 
     @Override
-    public List<Musica> listMusicsByGender(Musica.Genero gender) {
+    public List<Musica> listMusicsByGender(String gender) {
         //verifica se está vazio
         List<Musica> allmusic = new ArrayList<>(listAllMusics());
+        Genero genderEnum = Genero.valueOf(gender);
         
-        //remove da lista se gender != musica.genero para toda musica em list
-        for (Musica musica : allmusic){
-            if(musica.getGenero() != gender){
-                allmusic.remove(musica);
-            }
+        Iterator<Musica> iterator = allmusic.iterator();
+        while (iterator.hasNext()) {
+            Musica musica = iterator.next();
+            // Remover músicas que não pertencem ao gênero selecionado
+            if (!musica.getGenero().equals(genderEnum)) {
+                iterator.remove();
         }
+    }
         //retorna list
         return allmusic;
         
     }
+        
 
     @Override
     public Musica addMusic(String musicUrl, Musica.Genero gender, String artist) {

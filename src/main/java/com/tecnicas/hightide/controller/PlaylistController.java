@@ -7,6 +7,7 @@ package com.tecnicas.hightide.controller;
 import com.tecnicas.hightide.controller.ControllerUtils.ControllerUtils;
 import com.tecnicas.hightide.controller.interfaces.IPlaylistController;
 import com.tecnicas.hightide.model.models.Musica;
+import com.tecnicas.hightide.model.models.Musica.Genero;
 import com.tecnicas.hightide.model.models.Playlist;
 import com.tecnicas.hightide.model.services.PlaylistService;
 import java.util.ArrayList;
@@ -96,6 +97,12 @@ public class PlaylistController implements IPlaylistController{
 
     @Override
     public List<String> listAllGenders() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Genero[] elementos =  Genero.values();
+        List<String> generos = new ArrayList<>();
+        for (int i = 0; i < elementos.length; i++) {
+            generos.add(elementos[i].name()); // ou elementos[i].toString();
+        }
+        return generos;
     }
+    
 }

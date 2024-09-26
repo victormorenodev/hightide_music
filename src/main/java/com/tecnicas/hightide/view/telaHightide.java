@@ -11,7 +11,6 @@ import com.tecnicas.hightide.model.models.Playlist;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
-import com.tecnicas.hightide.model.models.Musica.Genero;
 
 /**
  *
@@ -48,13 +47,13 @@ public class telaHightide extends javax.swing.JFrame {
         }
         playlistsList.setModel(playlistListModel);
         
-        /*
+        
         List<String> gendersObjectList = new ArrayList<>(playlistController.listAllGenders());
         for (String genero : gendersObjectList){
             listGender.addElement(genero);
         }
         gendersList.setModel(listGender);
-        */
+        
     }
     
         
@@ -75,8 +74,8 @@ public class telaHightide extends javax.swing.JFrame {
         labelMusicaAtual = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        nextMButton = new javax.swing.JButton();
+        backMButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         playlistsList = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
@@ -117,17 +116,17 @@ public class telaHightide extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Todas as músicas");
 
-        jButton1.setText(">>");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        nextMButton.setText(">>");
+        nextMButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                nextMButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("<<");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        backMButton.setText("<<");
+        backMButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                backMButtonActionPerformed(evt);
             }
         });
 
@@ -154,6 +153,11 @@ public class telaHightide extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(51, 102, 0));
         jLabel3.setText("Playlists");
 
+        gendersList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                gendersListValueChanged(evt);
+            }
+        });
         jScrollPane3.setViewportView(gendersList);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
@@ -178,18 +182,15 @@ public class telaHightide extends javax.swing.JFrame {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel3))
                         .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel2)))
+                                .addComponent(backMButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nextMButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -221,8 +222,8 @@ public class telaHightide extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(playButton)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(nextMButton)
+                    .addComponent(backMButton)
                     .addComponent(labelArtistaAtual))
                 .addGap(46, 46, 46))
         );
@@ -247,17 +248,18 @@ public class telaHightide extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_playButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void nextMButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_nextMButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void backMButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backMButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_backMButtonActionPerformed
 
     private void playlistsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_playlistsListValueChanged
         // TODO add your handling code here:
         if (!playlistsList.getSelectedValue().equals("") || playlistsList != null){
+            listModel.clear();
             List<Musica> musicsObjectListPlaylist = new ArrayList (playlistController.listaMusicasPlaylist(playlistsList.getSelectedValue()));
             for (Musica musica : musicsObjectListPlaylist) {
                 listModel.addElement(musica.getTitulo() + " - " + musica.getArtista());
@@ -275,6 +277,19 @@ public class telaHightide extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_playlistsListAncestorMoved
 
+    private void gendersListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_gendersListValueChanged
+        if (!gendersList.getSelectedValue().equals("") || gendersList != null){
+            listModel.clear();
+            List<Musica> musicsObjectListGender = new ArrayList (musicController.listMusicsByGender(gendersList.getSelectedValue()));
+            System.out.println("\n\n\n ENTROU NO GENERO \n\n\n");
+            for (Musica musica : musicsObjectListGender) {
+                listModel.addElement(musica.getTitulo() + " - " + musica.getArtista());
+            }
+            musicsList.setModel(listModel);
+            
+        }
+    }//GEN-LAST:event_gendersListValueChanged
+
     /**
      * @param args the command line arguments
      */
@@ -282,9 +297,8 @@ public class telaHightide extends javax.swing.JFrame {
      // Criando um JPanel
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backMButton;
     private javax.swing.JList<String> gendersList;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -295,6 +309,7 @@ public class telaHightide extends javax.swing.JFrame {
     private javax.swing.JLabel labelArtistaAtual;
     private javax.swing.JLabel labelMusicaAtual;
     private javax.swing.JList<String> musicsList;
+    private javax.swing.JButton nextMButton;
     private javax.swing.JToggleButton playButton;
     private javax.swing.JList<String> playlistsList;
     // End of variables declaration//GEN-END:variables
