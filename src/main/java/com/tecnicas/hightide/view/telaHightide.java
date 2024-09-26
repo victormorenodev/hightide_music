@@ -5,7 +5,9 @@
 package com.tecnicas.hightide.view;
 
 import com.tecnicas.hightide.controller.MusicController;
+import com.tecnicas.hightide.controller.MusicPlayerController;
 import com.tecnicas.hightide.controller.PlaylistController;
+import com.tecnicas.hightide.controller.QueueController;
 import com.tecnicas.hightide.model.models.Musica;
 import com.tecnicas.hightide.model.models.Playlist;
 import java.util.ArrayList;
@@ -27,18 +29,24 @@ public class telaHightide extends javax.swing.JFrame {
     MusicController musicController;
     Musica musicaAtual;
     PlaylistController playlistController;
-    
-    
+    QueueController queue;  
+    MusicPlayerController player;
+    Musica musicaSelecionada = null;
     
     public telaHightide() {
         initComponents();
         musicController = new MusicController();
         List<Musica> musicsObjectList = new ArrayList<>(musicController.listAllMusics());
+        queue = new QueueController(musicsObjectList);
+        player = new MusicPlayerController(queue);
         for (Musica musica : musicsObjectList) {
             listModel.addElement(musica.getTitulo() + " - " + musica.getArtista());
         }
         musicsList.setModel(listModel);
         playButton.setText("PLAY");
+        playButton.setEnabled(false);
+        nextMusicButton.setEnabled(false);
+        previousMusicButton.setEnabled(false);
         
         playlistController = new PlaylistController();
         List<Playlist> playlistObjectList = new ArrayList<>(playlistController.listAllPlaylists());
@@ -56,8 +64,32 @@ public class telaHightide extends javax.swing.JFrame {
         
     }
     
-        
-
+     private void managePlayButton() {
+        if (playButton.isEnabled() == false || nextMusicButton.isEnabled() == false || previousMusicButton.isEnabled() == false) {
+            playButton.setEnabled(true);
+            nextMusicButton.setEnabled(true);
+            previousMusicButton.setEnabled(true);
+        }
+        // se o player seleciona uma música diferente da atual, ou não há música atual ainda
+        if (player.getMusicaAtual() != null) {
+            if (!musicaSelecionada.getTitulo().equals(player.getMusicaAtual().getTitulo())) { 
+                playButton.setText("PLAY");
+                playButton.setSelected(false);
+            } else { // player está com a música atual selecionada
+                if (player.getIsPlaying() == true) { // ela está tocando
+                    playButton.setText("PAUSE");
+                    playButton.setSelected(true);
+                } else { // ela não está tocando
+                    playButton.setText("PLAY");
+                    playButton.setSelected(false);
+                }
+            }
+        } else {
+            playButton.setText("PLAY");
+            playButton.setSelected(false);
+        }
+    }    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -232,30 +264,71 @@ public class telaHightide extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void musicsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_musicsListValueChanged
-        
+        musicaSelecionada = musicController.musicByTitle(musicsList.getSelectedValue().split(" - ")[0]);
+        managePlayButton();
+        //jLabel7.setText(musicaSelecionada.getTitulo());
     }//GEN-LAST:event_musicsListValueChanged
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        if (!musicsList.getSelectedValue().equals("") || musicsList.getSelectedValue() != null) {
-            musicaAtual = musicController.playMusic(musicsList.getSelectedValue().split(" - ")[0]);
-            labelMusicaAtual.setText(musicaAtual.getTitulo());
-            labelArtistaAtual.setText(musicaAtual.getArtista());
+        if (player.getMusicaAtual() == null) {
+            labelMusicaAtual.setText(musicaSelecionada.getTitulo());
+            labelArtistaAtual.setText(musicaSelecionada.getArtista());
+            player.tocarMusica(musicaSelecionada);
+            managePlayButton();
+            //jLabel6.setText(player.getMusicaAtual().getTitulo());
+            //jLabel8.setText(player.getIsPlaying().toString());
+            return;
         }
-        if (musicController.getIsPlaying() == true) {
-            playButton.setText("PAUSE");
+        if (!musicaSelecionada.getTitulo().equals(player.getMusicaAtual().getTitulo())) {
+            labelMusicaAtual.setText(musicaSelecionada.getTitulo());
+            labelArtistaAtual.setText(musicaSelecionada.getArtista());
+            player.pararMusica();
+            player.tocarMusica(musicaSelecionada);
+            managePlayButton();
         } else {
-            playButton.setText("PLAY");
+            if (player.getIsPlaying() == true) {
+                player.pausarMusica();
+                managePlayButton();
+            } else {
+                player.retomarMusica();
+                managePlayButton();
+            }
         }
+       //jLabel6.setText(player.getMusicaAtual().getTitulo());
+       //jLabel8.setText(player.getIsPlaying().toString());
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void nextMusicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMusicButtonActionPerformed
-        // TODO add your handling code here:
+        int currentIndex = musicsList.getSelectedIndex(); // Obtém o índice atual
+        if (currentIndex < musicsList.getModel().getSize() - 1) { // Verifica se não é o último item
+            musicsList.setSelectedIndex(currentIndex + 1); // Move para o próximo item
+        } else {
+            musicsList.setSelectedIndex(0);
+        }
+        player.proximaMusica();
+        updateCurrentMusicInfo();
+        managePlayButton();
     }//GEN-LAST:event_nextMusicButtonActionPerformed
 
     private void previousMusicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousMusicButtonActionPerformed
-        // TODO add your handling code here:
+        int currentIndex = musicsList.getSelectedIndex(); // Obtém o índice atual
+        if (currentIndex > 0) { // Verifica se não é o primeiro item
+            musicsList.setSelectedIndex(currentIndex - 1); // Move para o item anterior
+        } else {
+            musicsList.setSelectedIndex(musicsList.getModel().getSize() - 1);
+        }
+        player.musicaAnterior();
+        updateCurrentMusicInfo();
+        managePlayButton();
     }//GEN-LAST:event_previousMusicButtonActionPerformed
 
+        private void updateCurrentMusicInfo() {
+        if (musicaSelecionada != null) {
+            labelMusicaAtual.setText(musicaSelecionada.getTitulo());
+            labelArtistaAtual.setText(musicaSelecionada.getArtista());
+        }
+    }
+    
     private void playlistsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_playlistsListValueChanged
         // TODO add your handling code here:
         if (!playlistsList.getSelectedValue().equals("") || playlistsList != null){

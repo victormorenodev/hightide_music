@@ -4,7 +4,6 @@
  */
 package com.tecnicas.hightide.controller;
 
-import com.tecnicas.hightide.MusicPlayer;
 import com.tecnicas.hightide.controller.ControllerUtils.ControllerUtils;
 import java.util.ArrayList;
 import com.tecnicas.hightide.controller.interfaces.IMusicaController;
@@ -24,10 +23,6 @@ public class MusicController implements IMusicaController{
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence.xml");
     MusicaService musicaService = new MusicaService(emf);
     ControllerUtils controllerUtils = new ControllerUtils(emf);
-    MusicPlayer player = new MusicPlayer();
-    Musica musicaAtual = null;
-    Boolean isPlaying = false;
-    //Integer posicaoAtualMusica = 0;
     
     @Override
     public List<Musica> listAllMusics() {
@@ -41,7 +36,7 @@ public class MusicController implements IMusicaController{
         //verifica se está vazio
         List<Musica> allmusic = new ArrayList<>(listAllMusics());
         Genero genderEnum = Genero.valueOf(gender);
-        
+
         Iterator<Musica> iterator = allmusic.iterator();
         while (iterator.hasNext()) {
             Musica musica = iterator.next();
@@ -52,9 +47,7 @@ public class MusicController implements IMusicaController{
     }
         //retorna list
         return allmusic;
-        
     }
-        
 
     @Override
     public Musica addMusic(String musicUrl, Musica.Genero gender, String artist) {
@@ -97,7 +90,7 @@ public class MusicController implements IMusicaController{
        
     }
 
-    @Override
+    /*@Override
     public Musica playMusic(String musicTitle) {
         if((controllerUtils.isStringValid(musicTitle) && controllerUtils.musicExists(musicTitle))){
             if (musicaAtual == null) {
@@ -125,23 +118,7 @@ public class MusicController implements IMusicaController{
         //musicaByTitulo(musicTitle);
         //retorna musica se != null
         return musicaAtual;
-    }
-
-    public Musica getMusicaAtual() {
-        return musicaAtual;
-    }
-
-    public void setMusicaAtual(Musica musicaAtual) {
-        this.musicaAtual = musicaAtual;
-    }
-
-    public Boolean getIsPlaying() {
-        return isPlaying;
-    }
-
-    public void setIsPlaying(Boolean isPlaying) {
-        this.isPlaying = isPlaying;
-    }
+    }*/
 
     /*public Integer getPosicaoAtualMusica() {
         return posicaoAtualMusica;
@@ -151,5 +128,11 @@ public class MusicController implements IMusicaController{
         this.posicaoAtualMusica = posicaoAtualMusica;
     }*/
     
-    
+    public Musica musicByTitle(String musicTitle) {
+        if((controllerUtils.isStringValid(musicTitle) && controllerUtils.musicExists(musicTitle))){
+            return controllerUtils.accessMusic(musicTitle);
+        } else {
+            return null;
+        }
+    }
 }
