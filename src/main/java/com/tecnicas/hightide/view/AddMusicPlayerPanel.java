@@ -4,23 +4,50 @@
  */
 package com.tecnicas.hightide.view;
 
+import com.tecnicas.hightide.controller.MusicController;
+import com.tecnicas.hightide.controller.PlaylistController;
+import com.tecnicas.hightide.controller.QueueController;
+import com.tecnicas.hightide.model.models.Musica;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Usuario
  */
 public class AddMusicPlayerPanel extends javax.swing.JFrame {
-
+    PlaylistController playlistController;
+    MusicController musicController;
+    DefaultListModel listModel;
+    String musicPath;
     /**
      * Creates new form AddMusicPlayerPanel
      */
     public AddMusicPlayerPanel(telaHightide tela) {
         initComponents();
+        this.lblErrorInput.setVisible(false);
+        this.musicController = new MusicController();
+        this.playlistController = new PlaylistController();
+        this.listModel = new DefaultListModel();
+        
+        
+        List<String> gendersObjectList = new ArrayList<>(playlistController.listAllGenders());
+        for (String generos : gendersObjectList) {
+            listModel.addElement(generos);
+        }
+        gendersListInput.setModel(listModel);
+        
         // Cria um JFileChooser
         JFileChooser fileChooser = new JFileChooser();
+       /*
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".wav");
         
+        fileChooser.setFileFilter(filter);
+        */
         // Exibe o diálogo de seleção de arquivo
         int returnValue = fileChooser.showOpenDialog(null);
 
@@ -28,6 +55,9 @@ public class AddMusicPlayerPanel extends javax.swing.JFrame {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             // Obtém o arquivo selecionado
             File selectedFile = fileChooser.getSelectedFile();
+            
+            musicPath = selectedFile.getAbsolutePath();
+            
         }else{
             System.out.println("\n ERRO \n");
         }
@@ -42,21 +72,103 @@ public class AddMusicPlayerPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        gendersListInput = new javax.swing.JList<>();
+        jLabel2 = new javax.swing.JLabel();
+        txtArtistName = new javax.swing.JTextField();
+        addButton = new javax.swing.JButton();
+        lblErrorInput = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Indique o gênero da música:");
+
+        jScrollPane1.setViewportView(gendersListInput);
+
+        jLabel2.setText("Digite o nome do artista:");
+
+        txtArtistName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtArtistNameActionPerformed(evt);
+            }
+        });
+
+        addButton.setText("Adicionar");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtArtistName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblErrorInput, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addButton))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(10, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtArtistName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblErrorInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(addButton)
+                        .addGap(34, 34, 34))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtArtistNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtArtistNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtArtistNameActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here
+        if (gendersListInput.getSelectedValue() != null && !txtArtistName.getText().equals("")){
+        String musicGender = gendersListInput.getSelectedValue();
+        String artistName = txtArtistName.getText();
+        
+        musicController.addMusic(musicPath, musicGender, artistName);
+        
+        this.dispose();
+        }else{
+            lblErrorInput.setText("Preencha os dois campos!");
+            lblErrorInput.setVisible(true);
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -95,5 +207,12 @@ public class AddMusicPlayerPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
+    private javax.swing.JList<String> gendersListInput;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblErrorInput;
+    private javax.swing.JTextField txtArtistName;
     // End of variables declaration//GEN-END:variables
 }
