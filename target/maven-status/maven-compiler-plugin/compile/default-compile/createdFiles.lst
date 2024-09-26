@@ -4,6 +4,7 @@ com\tecnicas\hightide\view\telaHightide$8.class
 com\tecnicas\hightide\controller\QueueController.class
 com\tecnicas\hightide\view\telaHightide$3.class
 com\tecnicas\hightide\controller\interfaces\IQueueController.class
+com\tecnicas\hightide\model\interfaces\MusicPlayerObserver.class
 com\tecnicas\hightide\Hightide.class
 com\tecnicas\hightide\model\models\Playlist.class
 com\tecnicas\hightide\model\interfaces\IPlaylistService.class
@@ -11,6 +12,7 @@ com\tecnicas\hightide\controller\PlaylistController.class
 com\tecnicas\hightide\controller\MusicController.class
 com\tecnicas\hightide\controller\interfaces\IPlaylistController.class
 com\tecnicas\hightide\view\telaHightide$5.class
+com\tecnicas\hightide\controller\MusicPlayerController$1.class
 com\tecnicas\hightide\view\telaHightide.class
 com\tecnicas\hightide\view\telaHightide$7.class
 com\tecnicas\hightide\model\models\Musica.class

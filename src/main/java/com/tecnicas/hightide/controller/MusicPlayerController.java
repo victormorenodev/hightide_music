@@ -4,7 +4,9 @@
  */
 package com.tecnicas.hightide.controller;
 
+import com.tecnicas.hightide.model.interfaces.MusicPlayerObserver;
 import com.tecnicas.hightide.model.models.Musica;
+import com.tecnicas.hightide.view.telaHightide;
 import java.io.File;
 import java.io.IOException;
 import javax.sound.sampled.*;
@@ -18,9 +20,11 @@ public class MusicPlayerController {
     Clip clip;
     Musica musicaAtual;
     Boolean isPlaying;
+    private final MusicPlayerObserver observer;
     
-    public MusicPlayerController(QueueController q) {
+    public MusicPlayerController(QueueController q, MusicPlayerObserver observer) {
         this.queue = q;
+        this.observer = observer;
         this.isPlaying = false;
     }
     
@@ -30,6 +34,18 @@ public class MusicPlayerController {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
             clip = AudioSystem.getClip();
             clip.open(audioStream);
+            
+            clip.addLineListener(new LineListener() {
+            @Override
+            public void update(LineEvent event) {
+                if (event.getType() == LineEvent.Type.STOP) {
+                    // Verifica se a música chegou ao fim
+                    if (clip.getMicrosecondPosition() >= clip.getMicrosecondLength()) {
+                        observer.playNextMusic(); // Chama a próxima música apenas se terminou naturalmente
+                    }
+                }
+            }
+            });
             
             queue.setMusicaAtualNaFila(musica);
             setMusicaAtual(musica);

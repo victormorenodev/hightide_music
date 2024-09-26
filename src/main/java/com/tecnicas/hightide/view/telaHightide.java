@@ -8,6 +8,7 @@ import com.tecnicas.hightide.controller.MusicController;
 import com.tecnicas.hightide.controller.MusicPlayerController;
 import com.tecnicas.hightide.controller.PlaylistController;
 import com.tecnicas.hightide.controller.QueueController;
+import com.tecnicas.hightide.model.interfaces.MusicPlayerObserver;
 import com.tecnicas.hightide.model.models.Musica;
 import com.tecnicas.hightide.model.models.Playlist;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import javax.swing.DefaultListModel;
  *
  * @author Usuario
  */
-public class telaHightide extends javax.swing.JFrame {
+public class telaHightide extends javax.swing.JFrame implements MusicPlayerObserver{
 
     /**
      * Creates new form telaHightide
@@ -38,7 +39,7 @@ public class telaHightide extends javax.swing.JFrame {
         musicController = new MusicController();
         List<Musica> musicsObjectList = new ArrayList<>(musicController.listAllMusics());
         queue = new QueueController(musicsObjectList);
-        player = new MusicPlayerController(queue);
+        player = new MusicPlayerController(queue, this);
         for (Musica musica : musicsObjectList) {
             listModel.addElement(musica.getTitulo() + " - " + musica.getArtista());
         }
@@ -298,7 +299,8 @@ public class telaHightide extends javax.swing.JFrame {
        //jLabel8.setText(player.getIsPlaying().toString());
     }//GEN-LAST:event_playButtonActionPerformed
 
-    private void nextMusicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMusicButtonActionPerformed
+    @Override
+    public void playNextMusic() {
         int currentIndex = musicsList.getSelectedIndex(); // Obtém o índice atual
         if (currentIndex < musicsList.getModel().getSize() - 1) { // Verifica se não é o último item
             musicsList.setSelectedIndex(currentIndex + 1); // Move para o próximo item
@@ -307,7 +309,11 @@ public class telaHightide extends javax.swing.JFrame {
         }
         player.proximaMusica();
         updateCurrentMusicInfo();
-        managePlayButton();
+        managePlayButton();    
+    }
+    
+    private void nextMusicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextMusicButtonActionPerformed
+        playNextMusic();
     }//GEN-LAST:event_nextMusicButtonActionPerformed
 
     private void previousMusicButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousMusicButtonActionPerformed
