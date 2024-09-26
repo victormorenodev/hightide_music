@@ -5,9 +5,12 @@
 package com.tecnicas.hightide.view;
 
 import com.tecnicas.hightide.controller.MusicController;
+import com.tecnicas.hightide.controller.MusicPlayerController;
+import com.tecnicas.hightide.controller.QueueController;
 import com.tecnicas.hightide.model.models.Musica;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import javax.swing.DefaultListModel;
 
 /**
@@ -21,17 +24,24 @@ public class telaHightide extends javax.swing.JFrame {
      */
     DefaultListModel listModel = new DefaultListModel();
     MusicController musicController;
-    Musica musicaAtual;
+    QueueController queue;
+    MusicPlayerController player;
+    Musica musicaSelecionada = null;
     
     public telaHightide() {
         initComponents();
         musicController = new MusicController();
         List<Musica> musicsObjectList = new ArrayList<>(musicController.listAllMusics());
+        queue = new QueueController(musicsObjectList);
+        player = new MusicPlayerController(queue);
         for (Musica musica : musicsObjectList) {
             listModel.addElement(musica.getTitulo() + " - " + musica.getArtista());
         }
         musicsList.setModel(listModel);
         playButton.setText("PLAY");
+        playButton.setEnabled(false);
+        nextMusicButton.setEnabled(false);
+        previousMusicButton.setEnabled(false);
     }
     
 
@@ -51,8 +61,14 @@ public class telaHightide extends javax.swing.JFrame {
         labelMusicaAtual = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        nextMusicButton = new javax.swing.JButton();
+        previousMusicButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HighTide");
@@ -86,19 +102,31 @@ public class telaHightide extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Todas as músicas");
 
-        jButton1.setText(">>");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        nextMusicButton.setText(">>");
+        nextMusicButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                nextMusicButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("<<");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        previousMusicButton.setText("<<");
+        previousMusicButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                previousMusicButtonActionPerformed(evt);
             }
         });
+
+        jLabel3.setText("musicaAtual:");
+
+        jLabel4.setText("musicaSelecionada:");
+
+        jLabel5.setText("isPlaying:");
+
+        jLabel6.setText("jLabel6");
+
+        jLabel7.setText("jLabel7");
+
+        jLabel8.setText("jLabel8");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,67 +145,165 @@ public class telaHightide extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(previousMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(nextMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
                                 .addComponent(jLabel2)))))
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(labelMusicaAtual)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelArtistaAtual)
-                        .addGap(63, 63, 63))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(68, 68, 68)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(labelMusicaAtual)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(labelArtistaAtual)
+                                .addGap(63, 63, 63))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(68, 68, 68)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(playButton)
+                                    .addComponent(nextMusicButton)
+                                    .addComponent(previousMusicButton))
+                                .addGap(46, 46, 46))))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(playButton)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
-                        .addGap(46, 46, 46))))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel8))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    // função responsável por ajustar o botão de acordo com o estado do player
+    private void managePlayButton() {
+        if (playButton.isEnabled() == false || nextMusicButton.isEnabled() == false || previousMusicButton.isEnabled() == false) {
+            playButton.setEnabled(true);
+            nextMusicButton.setEnabled(true);
+            previousMusicButton.setEnabled(true);
+        }
+        // se o player seleciona uma música diferente da atual, ou não há música atual ainda
+        if (player.getMusicaAtual() != null) {
+            if (!musicaSelecionada.getTitulo().equals(player.getMusicaAtual().getTitulo())) { 
+                playButton.setText("PLAY");
+                playButton.setSelected(false);
+            } else { // player está com a música atual selecionada
+                if (player.getIsPlaying() == true) { // ela está tocando
+                    playButton.setText("PAUSE");
+                    playButton.setSelected(true);
+                } else { // ela não está tocando
+                    playButton.setText("PLAY");
+                    playButton.setSelected(false);
+                }
+            }
+        } else {
+            playButton.setText("PLAY");
+            playButton.setSelected(false);
+        }
+    }
+    
     private void musicsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_musicsListValueChanged
-        
+        musicaSelecionada = musicController.musicByTitle(musicsList.getSelectedValue().split(" - ")[0]);
+        managePlayButton();
+        jLabel7.setText(musicaSelecionada.getTitulo());
     }//GEN-LAST:event_musicsListValueChanged
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        if (musicsList.getSelectedValue() != "" || musicsList.getSelectedValue() != null) {
-            musicaAtual = musicController.playMusic(musicsList.getSelectedValue().split(" - ")[0]);
-            labelMusicaAtual.setText(musicaAtual.getTitulo());
-            labelArtistaAtual.setText(musicaAtual.getArtista());
+        if (player.getMusicaAtual() == null) {
+            labelMusicaAtual.setText(musicaSelecionada.getTitulo());
+            labelArtistaAtual.setText(musicaSelecionada.getArtista());
+            player.tocarMusica(musicaSelecionada);
+            managePlayButton();
+            jLabel6.setText(player.getMusicaAtual().getTitulo());
+            jLabel8.setText(player.getIsPlaying().toString());
+            return;
         }
-        if (musicController.getIsPlaying() == true) {
-            playButton.setText("PAUSE");
+        if (!musicaSelecionada.getTitulo().equals(player.getMusicaAtual().getTitulo())) {
+            labelMusicaAtual.setText(musicaSelecionada.getTitulo());
+            labelArtistaAtual.setText(musicaSelecionada.getArtista());
+            player.pararMusica();
+            player.tocarMusica(musicaSelecionada);
+            managePlayButton();
         } else {
-            playButton.setText("PLAY");
+            if (player.getIsPlaying() == true) {
+                player.pausarMusica();
+                managePlayButton();
+            } else {
+                player.retomarMusica();
+                managePlayButton();
+            }
         }
+       jLabel6.setText(player.getMusicaAtual().getTitulo());
+       jLabel8.setText(player.getIsPlaying().toString());
     }//GEN-LAST:event_playButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void nextMusicButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        int currentIndex = musicsList.getSelectedIndex(); // Obtém o índice atual
+        if (currentIndex < musicsList.getModel().getSize() - 1) { // Verifica se não é o último item
+            musicsList.setSelectedIndex(currentIndex + 1); // Move para o próximo item
+        } else {
+            musicsList.setSelectedIndex(0);
+        }
+        player.proximaMusica();
+        updateCurrentMusicInfo();
+        managePlayButton();
+    }                                               
+    
+    private void previousMusicButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+        int currentIndex = musicsList.getSelectedIndex(); // Obtém o índice atual
+        if (currentIndex > 0) { // Verifica se não é o primeiro item
+            musicsList.setSelectedIndex(currentIndex - 1); // Move para o item anterior
+        } else {
+            musicsList.setSelectedIndex(musicsList.getModel().getSize() - 1);
+        }
+        player.musicaAnterior();
+        updateCurrentMusicInfo();
+        managePlayButton();
+    }     
+    
+    // Método auxiliar para atualizar as informações da música atual
+    private void updateCurrentMusicInfo() {
+        if (musicaSelecionada != null) {
+            labelMusicaAtual.setText(musicaSelecionada.getTitulo());
+            labelArtistaAtual.setText(musicaSelecionada.getArtista());
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -186,14 +312,20 @@ public class telaHightide extends javax.swing.JFrame {
      // Criando um JPanel
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelArtistaAtual;
     private javax.swing.JLabel labelMusicaAtual;
     private javax.swing.JList<String> musicsList;
+    private javax.swing.JButton nextMusicButton;
     private javax.swing.JToggleButton playButton;
+    private javax.swing.JButton previousMusicButton;
     // End of variables declaration//GEN-END:variables
 }

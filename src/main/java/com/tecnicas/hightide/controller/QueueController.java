@@ -17,11 +17,11 @@ public class QueueController implements IQueueController{
     Musica musicaAtualNaFila;
     
     public QueueController(List<Musica> musicas) {
-        queue = new LinkedList<Musica>();
+        queue = new LinkedList<Musica>(musicas);
     }
     
     public List<Musica> getCurrentQueue() {
-        return queue.subList(0, queue.size()-1);
+        return queue.subList(0, queue.size());
     }
     
     public List<Musica> setCurrentQueue(List<Musica> list) {
@@ -48,29 +48,49 @@ public class QueueController implements IQueueController{
 
     @Override
     public Musica proxMusica() {
-        Integer proxMusicaIndex = queue.indexOf(musicaAtualNaFila)+1;
-        if (proxMusicaIndex > queue.size()-1) {
-            setMusicaAtualNaFila(queue.get(0));
-            return getMusicaAtualNaFila();
+        // procura o índice da música atual na fila comparando os títulos
+        int currentIndex = -1;
+        for (int i = 0; i < queue.size(); i++) {
+            if (queue.get(i).getTitulo().equals(musicaAtualNaFila.getTitulo())) {
+                currentIndex = i;
+                break;
+            }
         }
-        else {
-            setMusicaAtualNaFila(queue.get(proxMusicaIndex));
-            return getMusicaAtualNaFila();
+
+        // calcula o índice da próxima música
+        int proxMusicaIndex = currentIndex + 1;
+
+        // se passou do tamanho da fila, volta para o início
+        if (proxMusicaIndex >= queue.size()) {
+            proxMusicaIndex = 0;
         }
+
+        // define a próxima música como a atual
+        setMusicaAtualNaFila(queue.get(proxMusicaIndex));
+        return getMusicaAtualNaFila();
     }
 
     @Override
     public Musica musicaAnterior() {
-        Integer proxMusicaIndex = queue.indexOf(musicaAtualNaFila)-1;
-        if (proxMusicaIndex < 0) {
-            setMusicaAtualNaFila(queue.get(queue.size()-1));
-            return getMusicaAtualNaFila();
+        // procura o índice da música atual na fila comparando os títulos
+        int currentIndex = -1;
+        for (int i = 0; i < queue.size(); i++) {
+            if (queue.get(i).getTitulo().equals(musicaAtualNaFila.getTitulo())) {
+                currentIndex = i;
+                break;
+            }
         }
-        else {
-            setMusicaAtualNaFila(queue.get(proxMusicaIndex));
-            return getMusicaAtualNaFila();
+
+        // calcula o índice da música anterior
+        int prevMusicaIndex = currentIndex - 1;
+
+        // se o índice é menor que zero, volta para o fim da fila
+        if (prevMusicaIndex < 0) {
+            prevMusicaIndex = queue.size() - 1;
         }
+
+        // define a música anterior como a atual
+        setMusicaAtualNaFila(queue.get(prevMusicaIndex));
+        return getMusicaAtualNaFila();
     }
-    
-    
 }
