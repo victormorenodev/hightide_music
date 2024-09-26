@@ -31,6 +31,7 @@ public class AddToPlaylistPanel extends javax.swing.JFrame {
      */
     public AddToPlaylistPanel(telaHightide tela) {
         initComponents();
+        labelError.setVisible(false);
         this.tela = tela;
         this.musicController = new MusicController();
         this.playlistController = new PlaylistController();
@@ -127,6 +128,7 @@ public class AddToPlaylistPanel extends javax.swing.JFrame {
     private void addMusicaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMusicaButtonActionPerformed
         if (playlistController.addMusicToPlaylist(comboBox.getSelectedItem().toString(), musicList.getSelectedValue().split(" - ")[0]) == null){
             labelError.setText("Ocorreu um erro ao adicionar!");
+            labelError.setVisible(true);
         }else{
             tela.refreshMusics();
             this.dispose();
