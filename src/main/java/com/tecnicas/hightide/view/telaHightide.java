@@ -182,18 +182,6 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
             }
         });
 
-        playlistsList.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
-            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
-                playlistsListAncestorMoved(evt);
-            }
-            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
-            }
-        });
-        playlistsList.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                playlistsListPropertyChange(evt);
-            }
-        });
         playlistsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 playlistsListValueChanged(evt);
