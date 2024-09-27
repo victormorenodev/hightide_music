@@ -77,6 +77,7 @@ public class MusicController implements IMusicaController{
         musicaService.createMusica(title, artist, urlcapa, musicUrl, genero);
         
         playlistController.addMusicToPlaylist(gender, title);
+        playlistController.addMusicToPlaylist("Todas as Musicas", title);
         return musicaService.musicaByTitulo(title);
     }
 
