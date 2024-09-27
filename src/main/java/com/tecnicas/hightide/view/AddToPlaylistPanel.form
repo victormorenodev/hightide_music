@@ -39,11 +39,11 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
-                      <Component id="addMusicaButton" min="-2" pref="113" max="-2" attributes="0"/>
+                      <Component id="addMusicaButton" min="-2" pref="132" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
-                      <Component id="labelError" min="-2" pref="41" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
+                      <Component id="labelError" min="-2" pref="113" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="102" max="32767" attributes="0"/>

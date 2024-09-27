@@ -372,16 +372,18 @@ public class telaHightide extends javax.swing.JFrame implements MusicPlayerObser
     
     private void playlistsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_playlistsListValueChanged
         // TODO add your handling code here:
-        if (!playlistsList.getSelectedValue().equals("") || playlistsList != null){
-            listModel.clear();
-            addMusicPlaylistButton.setEnabled(true);
-            List<Musica> musicsObjectListPlaylist = new ArrayList (playlistController.listaMusicasPlaylist(playlistsList.getSelectedValue()));
-            for (Musica musica : musicsObjectListPlaylist) {
-                listModel.addElement(musica.getTitulo() + " - " + musica.getArtista());
+        if (playlistsList.getSelectedValue() != null) {
+            if (!playlistsList.getSelectedValue().equals("") || playlistsList != null){
+                listModel.clear();
+                addMusicPlaylistButton.setEnabled(true);
+                List<Musica> musicsObjectListPlaylist = new ArrayList (playlistController.listaMusicasPlaylist(playlistsList.getSelectedValue()));
+                for (Musica musica : musicsObjectListPlaylist) {
+                    listModel.addElement(musica.getTitulo() + " - " + musica.getArtista());
+                }
+                playlistLabel.setText(playlistsList.getSelectedValue());
+                musicsList.setModel(listModel);
+                queue.setCurrentQueue(musicsObjectListPlaylist);
             }
-            playlistLabel.setText(playlistsList.getSelectedValue());
-            musicsList.setModel(listModel);
-            queue.setCurrentQueue(musicsObjectListPlaylist);
         }
     }//GEN-LAST:event_playlistsListValueChanged
 
