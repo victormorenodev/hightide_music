@@ -49,6 +49,13 @@ public class ControllerUtils {
     }
     
     public String getMusicNameFromURL(String musicUrl){
-        return musicUrl.substring(musicUrl.lastIndexOf("/") + 1, musicUrl.length()-4);
+    int lastSlashIndex = Math.max(musicUrl.lastIndexOf("/"), musicUrl.lastIndexOf("\\"));
+    
+    if (lastSlashIndex == -1) {
+        lastSlashIndex = 0;
+    } else {
+        lastSlashIndex += 1; 
+    }
+        return musicUrl.substring(lastSlashIndex, musicUrl.length()-4);
     }
 }
