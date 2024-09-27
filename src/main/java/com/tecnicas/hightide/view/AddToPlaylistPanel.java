@@ -68,7 +68,7 @@ public class AddToPlaylistPanel extends javax.swing.JFrame {
         addMusicaButton = new javax.swing.JButton();
         labelError = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Adicionar Música à Playlist");
 

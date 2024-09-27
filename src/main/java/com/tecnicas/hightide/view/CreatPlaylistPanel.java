@@ -40,7 +40,7 @@ public class CreatPlaylistPanel extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         ErrorLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         OKButton.setText("OK");
         OKButton.addActionListener(new java.awt.event.ActionListener() {
